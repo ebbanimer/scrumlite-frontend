@@ -1,25 +1,25 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react';
+import SprintList from './components/SprintList';
+import TaskList from './components/TaskList';
+import AddSprint from './components/AddSprint';
+import AddTask from './components/AddTask';
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    const [selectedSprint, setSelectedSprint] = useState(null);
+
+    return (
+        <div>
+            <h1>ScrumLite</h1>
+            <AddSprint onSprintAdded={() => window.location.reload()} />
+            <SprintList onSelectSprint={setSelectedSprint} />
+            {selectedSprint && (
+                <>
+                    <TaskList sprintId={selectedSprint} />
+                    <AddTask sprintId={selectedSprint} onTaskAdded={() => window.location.reload()} />
+                </>
+            )}
+        </div>
+    );
 }
 
 export default App;
